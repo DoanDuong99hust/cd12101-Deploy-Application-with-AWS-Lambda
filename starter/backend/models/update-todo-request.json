@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "update-todo",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "minLength": 4,
+        "pattern": "^(?!\\s*$).+"
+      },
+      "dueDate": {
+        "type": "string",
+        "pattern": "\\d{4}-\\d{2}-\\d{2}"
+      },
+      "done": {
+        "type": "boolean"
+      },
+      "attachmentUrl": {
+        "type": "string",
+        "format": "uri"
+      }
+    },
+    "additionalProperties": false
+  }
