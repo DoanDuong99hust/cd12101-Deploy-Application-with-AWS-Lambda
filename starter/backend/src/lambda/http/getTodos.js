@@ -2,11 +2,13 @@ import middy from '@middy/core';
 import cors from '@middy/http-cors';
 import httpErrorHandler from '@middy/http-error-handler';
 import { parseUserId } from "../../auth/utils.mjs"
-import {TodoService} from "../../services/todoService.mjs"
+import {TodoService} from "../service/todoService.mjs"
 
 const todoService = new TodoService
 export async function getTodos(event) {
   const authorization = event.headers.Authorization
+  console.log(event, authorization);
+  
   const userId = parseUserId(authorization)
   console.log('userId: ' + userId)
 

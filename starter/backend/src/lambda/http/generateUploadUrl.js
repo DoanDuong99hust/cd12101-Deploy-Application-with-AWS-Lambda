@@ -3,7 +3,7 @@ import cors from '@middy/http-cors';
 import httpErrorHandler from '@middy/http-error-handler';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
-import { TodoService } from '../../services/todoService.mjs';
+import { TodoService } from '../service/todoService.mjs';
 import { createLogger } from '../../utils/logger.mjs'
 import { parseUserId } from '../../auth/utils.mjs';
 

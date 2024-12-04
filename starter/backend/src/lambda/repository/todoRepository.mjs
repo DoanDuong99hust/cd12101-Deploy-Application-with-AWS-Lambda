@@ -1,11 +1,11 @@
 import { DynamoDB } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
-import { createLogger } from '../utils/logger.mjs'
+import { createLogger } from '../../utils/logger.mjs'
 import AWSXRay from 'aws-xray-sdk-core'
 
 export class TodoRepository {
 
-    constructor(todoTable=process.env.TODO_TABLE, todoIndex=process.env.CREATED_AT_INDEX) {
+    constructor(todoTable=process.env.TODOS_TABLE, todoIndex=process.env.TODOS_CREATED_AT_INDEX) {
         this.logger = createLogger('todoRepository')
 
         this.todoTable = todoTable
@@ -17,6 +17,8 @@ export class TodoRepository {
     }
 
     async getAll(userId) {
+        console.log(this.todoTable);
+        
         this.logger.info('Get all todos for userId: ' + userId)
         const result = await this.dynamoDbClient.query({
             TableName: this.todoTable,

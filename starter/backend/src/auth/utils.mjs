@@ -8,6 +8,18 @@ const logger = createLogger('utils')
  * @returns a user id from the JWT token
  */
 export function parseUserId(jwtToken) {
-  const decodedJwt = decode(jwtToken)
+  const decodedJwt = decode(getToken(jwtToken))
   return decodedJwt.sub
+}
+
+function getToken(authHeader) {
+  if (!authHeader) throw new Error('No authentication header')
+
+  if (!authHeader.toLowerCase().startsWith('bearer '))
+    throw new Error('Invalid authentication header')
+
+  const split = authHeader.split(' ')
+  const token = split[1]
+
+  return token
 }

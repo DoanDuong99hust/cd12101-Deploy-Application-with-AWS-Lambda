@@ -2,12 +2,12 @@ import middy from '@middy/core';
 import cors from '@middy/http-cors';
 import httpErrorHandler from '@middy/http-error-handler';
 import { v4 as uuidv4 } from 'uuid';
-import { TodoService } from '../../services/todoService.mjs';
+import { TodoService } from '../service/todoService.mjs';
 import { parseUserId } from '../../auth/utils.mjs';
 
 const todoService = new TodoService();
 
-export async function createTodo(event) {
+export async function handler(event) {
   const authorization = event.headers.Authorization
   const userId = parseUserId(authorization)
 
@@ -28,14 +28,18 @@ export async function createTodo(event) {
 
   return {
     statusCode: 201,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true
+    },
     body: JSON.stringify({
       item: newItem
     })
   }
 }
 
-export const handler = middy(createTodo)
-  .use(httpErrorHandler()) // Handles HTTP errors and returns proper response
-  .use(cors({
-    credentials: true, // Allow credentials
-  }));
+// export const handler = middy(createTodo)
+//   .use(httpErrorHandler()) // Handles HTTP errors and returns proper response
+//   .use(cors({
+//     credentials: true, // Allow credentials
+//   }));

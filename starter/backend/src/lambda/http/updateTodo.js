@@ -2,7 +2,7 @@ import middy from '@middy/core';
 import cors from '@middy/http-cors';
 import httpErrorHandler from '@middy/http-error-handler';
 import { parseUserId } from "../../auth/utils.mjs";
-import { TodoService } from "../../services/todoService.mjs";
+import { TodoService } from "../service/todoService.mjs";
 import { createLogger } from '../../utils/logger.mjs'
 
 const todoService = new TodoService();
