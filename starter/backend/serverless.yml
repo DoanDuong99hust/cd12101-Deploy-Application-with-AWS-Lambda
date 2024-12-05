@@ -16,6 +16,7 @@ provider:
     TODOS_TABLE: "Todo_Table"
     TODOS_CREATED_AT_INDEX: CreatedAtIndex
     S3_BUCKET_NAME: 'serverless-todo-app-bucket'
+    SIGNED_URL_EXPIRATION: 300
  
 functions:
   Auth:
@@ -73,6 +74,7 @@ functions:
       - Effect: "Allow"
         Action:
           - "dynamodb:PutItem"
+          - "dynamodb:GetItem"
         Resource:
           - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
       - Effect: "Allow"
@@ -100,6 +102,7 @@ functions:
       - Effect: "Allow"
         Action:
           - "dynamodb:UpdateItem"
+          - "dynamodb:GetItem"
         Resource:
           - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
       - Effect: "Allow"
@@ -124,6 +127,7 @@ functions:
       - Effect: "Allow"
         Action:
           - "dynamodb:DeleteItem"
+          - "dynamodb:GetItem"
         Resource:
           - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
       - Effect: "Allow"
@@ -151,6 +155,11 @@ functions:
           - "s3:GetObject"
         Resource:
           - arn:aws:s3:::${self:provider.environment.S3_BUCKET_NAME}/*
+      - Effect: Allow
+        Action:
+          - "dynamodb:GetItem"
+        Resource: 
+          - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
       - Effect: "Allow"
         Action:
           - "xray:PutTelemetryRecords"

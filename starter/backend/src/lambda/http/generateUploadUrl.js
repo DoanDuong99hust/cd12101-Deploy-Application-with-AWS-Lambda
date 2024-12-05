@@ -10,7 +10,7 @@ import { parseUserId } from '../../auth/utils.mjs';
 const s3Client = new S3Client()
 const todoService = new TodoService();
 const logger = createLogger('todoRepository')
-const BUCKET_NAME = process.env.IMAGES_S3_BUCKET
+const BUCKET_NAME = process.env.S3_BUCKET_NAME
 const URL_EXPIRATION = process.env.SIGNED_URL_EXPIRATION
 
 export async function generateUploadUrl(event) {
