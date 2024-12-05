@@ -2,7 +2,8 @@ import { useAuth0 } from '@auth0/auth0-react'
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Button, Form } from 'semantic-ui-react'
-import { getUploadUrl, uploadFile } from '../api/todos-api'
+import { getUploadUrl, patchTodo, uploadFile } from '../api/todos-api'
+import { useNavigate } from "react-router-dom";
 
 const auth0Domain = process.env.REACT_APP_AUTH0_DOMAIN
 
@@ -13,6 +14,7 @@ const UploadState = {
 }
 
 export function EditTodo() {
+  const navigate = useNavigate();
   function renderButton() {
     return (
       <div>
@@ -51,9 +53,13 @@ export function EditTodo() {
       const uploadUrl = await getUploadUrl(accessToken, todoId)
 
       setUploadState(UploadState.UploadingFile)
+      await patchTodo(accessToken, todoId, {
+        attachmentUrl: uploadUrl.split('?')[0]
+      })
       await uploadFile(uploadUrl, file)
 
       alert('File was uploaded!')
+      navigate("/");
     } catch (e) {
       alert('Could not upload a file: ' + e.message)
     } finally {
